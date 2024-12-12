@@ -51,13 +51,6 @@ app.get("/", (req, res) => {
 // });
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({}).lean();
-    allListings.forEach(listing => {
-        if (listing.image) {
-            listing.image = listing.image.url;
-        } else {
-            listing.image = null;
-        }
-    });
     res.render("./listings/index.ejs", { allListings });
 });
 
@@ -69,11 +62,6 @@ app.get("/listings/new", (req, res) => {
 app.get("/listings/:id", async (req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id).lean();
-    if (listing.image) {
-        listing.image = listing.image.url;
-    } else {
-        listing.image = null;
-    }
     res.render("listings/show", { listing });
 });
 
