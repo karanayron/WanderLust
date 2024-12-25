@@ -53,7 +53,6 @@ const validateReview = (req, res, next) => {
     }
 };
 
-
 // app.get("/testlisting", (req, res) =>{
 //     let sampleListing = new Listing({
 //         title: "My New Villa",
@@ -73,6 +72,7 @@ const validateReview = (req, res, next) => {
 //     const allListings = await Listing.find({});
 //     res.render("./listings/index.ejs", { allListings });
 // });
+
 app.get("/listings", wrapAsync(async (req, res) => {
     const allListings = await Listing.find({}).lean();
     res.render("./listings/index.ejs", { allListings });
