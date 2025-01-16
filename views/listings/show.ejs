@@ -7,23 +7,26 @@
             <h3 class="text-center"><b> <%= listing.title %> </b></h3> <!-- Moved the heading inside the card -->
             <img src="<%= listing.image %>" class="card-img-top show-img" alt="...">
             <div class="card-body">
-                <p class="card-text"> 
-                    <br>
-                    <%= listing.description %>  <br>
-                    ₹ <%= listing.price %> <br>
-                    <%= listing.location %> <br>
-                    <%= listing.country %><br>
+                <p class="card-text">
+                    <p class="card-text">Owned by <i></i><%= listing.owner.username %></i></p>
+                    <p class="card-text"><%= listing.description %></p>
+                    <p class="card-text">₹ <%= listing.price %></p>
+                    <p class="card-text"><%= listing.location %></p>
+                    <p class="card-text"><%= listing.country %></p>
                 </p>
             </div>
         </div>
     </div>
     <br/>
+    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
     <div class="col-8 text-center"> <!-- Changed col-1 to col-8 for proper alignment -->
         <a href="/listings/<%=listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
         <form method="POST" action="<%=listing._id%>?_method=DELETE" class="d-inline"> <!-- Added d-inline to keep buttons inline -->
             <button class="btn btn-dark">Delete</button>
         </form>
     </div>
+    <% } %>
+    <% if(currUser) { %>
     <div class="col-8 offset-3 mb-3">
         <hr>
         <h4>Leave a Review</h4>
@@ -39,13 +42,14 @@
             </div>
             <button class="btn btn-outline-dark">Submit</button>
         </form>
+        <% } %>
         <hr>
         <p><b>All reviews</b></p>
 <div class="row">
     <% for(let review of listing.reviews) { %>
         <div class="cars col-5 ms-3 mb-3">
             <div class="card">
-                <h5 class="card-title">Tony Stark</h5>
+                <h5 class="card-title">@<%= review.author.username %></h5>
                 <p class="card-text">
                     <%= review.comment %>
                 </p>
