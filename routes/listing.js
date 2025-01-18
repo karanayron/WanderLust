@@ -22,5 +22,4 @@ router.route("/:id").get(wrapAsync(listingController.showListing)).put(isLoggesI
 //edit route
 router.get("/:id/edit",isLoggesIn, isOwner, wrapAsync(listingController.renderEditForm));
 
-
 module.exports = router;

@@ -19,7 +19,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-
+const Listing = require("./models/listing.js");
 const listingRouter = require("./routes/listing.js")
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
@@ -71,9 +71,7 @@ const sessionOptions = {
     },
 };
 
-// app.get("/", (req, res) => {
-//     res.send("Hey, I'm root");
-// });
+
 
 
 
@@ -105,10 +103,16 @@ app.use((req, res, next) => {
 //     res.send(registerUser);
 // })
 
+app.get("/", async(req, res) => {
+    const allListings = await Listing.find({}).lean();
+    res.render("./listings/index.ejs", { allListings }); // This renders 'views/listings/index.ejs'
+});
+
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
-app.listen(8080, () => {
-    console.log("server is listing to 8080");
+app.listen(4000, () => {
+    console.log("server is listing to 4000");
 });
